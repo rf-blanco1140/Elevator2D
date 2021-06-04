@@ -5,16 +5,15 @@ using UnityEngine;
 public class EnviromentStatus : MonoBehaviour
 {
     private bool isWindy;
-    public enum Direction { Nulo, North, East, South, West};
-    [SerializeField] List<Direction> levelDirections;
+    [SerializeField] List<Directions> levelDirections;
     [SerializeField] List<float> timeStamps;
-    private Direction currentWindDirection;
+    private Directions currentWindDirection;
     private float timeLoopCounter;
 
     private void Start()
     {
         isWindy = false;
-        currentWindDirection = Direction.East;
+        currentWindDirection = Directions.Nulo;
         timeLoopCounter = 0;
         StartCoroutine(ExecuteLevelDirections());
     }
@@ -27,7 +26,7 @@ public class EnviromentStatus : MonoBehaviour
         }
         else
         {
-            selectRandomDirection();
+            SelectRandomDirection();
             timeLoopCounter = 0;
         }*/
     }
@@ -37,14 +36,14 @@ public class EnviromentStatus : MonoBehaviour
         return isWindy;
     }
 
-    public Direction GetWindDirection()
+    public Directions GetWindDirection()
     {
         return currentWindDirection;
     }
 
-    public void selectRandomDirection()
+    public void SelectRandomDirection()
     {
-        currentWindDirection = (Direction)Random.Range(0,3);
+        currentWindDirection = (Directions)Random.Range(0,4);
     }
 
     IEnumerator ExecuteLevelDirections()

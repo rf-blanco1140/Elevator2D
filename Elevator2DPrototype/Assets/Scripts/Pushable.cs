@@ -11,22 +11,10 @@ public class Pushable : MonoBehaviour
     protected GameObject EastCollidingObj;
     protected GameObject WestCollidingObj;
     [SerializeField] protected EnviromentStatus windRef;
-    public bool isGrabbed;
 
     private void Start()
     {
-        isGrabbed = false;
         currentSpeed = maxSpeed;
-    }
-
-    public bool GetIsGrabbed()
-    {
-        return isGrabbed;
-    }
-
-    public void SetIsGrabbed(bool pStatus)
-    {
-        isGrabbed = pStatus;
     }
 
     public float GetObjSpeed()
@@ -82,7 +70,28 @@ public class Pushable : MonoBehaviour
         }
     }
 
-    protected void MoveToDirection(Directions pDirection)
+    public GameObject GetCollidingObjInDirection(Directions pDirection)
+    {
+        GameObject requestedGO = null;
+        switch(pDirection)
+        {
+            case Directions.North:
+                requestedGO = NorthCollidingObj;
+                break;
+            case Directions.South:
+                requestedGO = SouthCollidingObj;
+                break;
+            case Directions.West:
+                requestedGO = WestCollidingObj;
+                break;
+            case Directions.East:
+                requestedGO = EastCollidingObj;
+                break;
+        }
+        return requestedGO;
+    }
+
+    public void MoveToDirection(Directions pDirection)
     {
         Vector3 movingVector = new Vector3();
         switch(pDirection)
@@ -101,5 +110,10 @@ public class Pushable : MonoBehaviour
                 break;
         }
         transform.Translate(movingVector, Space.World);
+    }
+
+    public EnviromentStatus GetWindReference()
+    {
+        return windRef;
     }
 }

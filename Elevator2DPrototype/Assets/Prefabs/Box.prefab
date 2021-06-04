@@ -301,7 +301,6 @@ GameObject:
   - component: {fileID: 8480182134009568202}
   - component: {fileID: 8480182134009568199}
   - component: {fileID: 2852316308956614288}
-  - component: {fileID: 8480182134009568200}
   - component: {fileID: 8480182134009568196}
   m_Layer: 0
   m_Name: Box
@@ -440,20 +439,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 0.05
   windRef: {fileID: 0}
-  isGrabbed: 0
---- !u!114 &8480182134009568200
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8480182134009568201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 151bcc5251cacba4f893b9b124a3b6f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxSpeed: 0
 --- !u!114 &8480182134009568196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -466,6 +451,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c81704a82d59e1e4791e831a614b20b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectRB: {fileID: 8480182134009568202}
   enviromentRef: {fileID: 0}
-  objStatus: {fileID: 8480182134009568200}
+  deliveryBoxRef: {fileID: 2852316308956614288}
