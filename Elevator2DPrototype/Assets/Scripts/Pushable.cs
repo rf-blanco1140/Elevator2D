@@ -6,10 +6,10 @@ public class Pushable : MonoBehaviour
 {
     [SerializeField] protected float maxSpeed;
     protected float currentSpeed;
-    protected GameObject NorthCollidingObj;
-    protected GameObject SouthCollidingObj;
-    protected GameObject EastCollidingObj;
-    protected GameObject WestCollidingObj;
+    protected Pushable NorthCollidingObj;
+    protected Pushable SouthCollidingObj;
+    protected Pushable EastCollidingObj;
+    protected Pushable WestCollidingObj;
     [SerializeField] protected EnviromentStatus windRef;
 
     private void Start()
@@ -32,7 +32,7 @@ public class Pushable : MonoBehaviour
         currentSpeed = currentSpeed - decreaseVal;
     }
 
-    public void SetCollingObject(Directions collisionDirection, GameObject collisionObj)
+    public void SetCollingObject(Directions collisionDirection, Pushable collisionObj)
     {
         switch(collisionDirection)
         {
@@ -70,9 +70,9 @@ public class Pushable : MonoBehaviour
         }
     }
 
-    public GameObject GetCollidingObjInDirection(Directions pDirection)
+    public Pushable GetCollidingObjInDirection(Directions pDirection)
     {
-        GameObject requestedGO = null;
+        Pushable requestedGO = null;
         switch(pDirection)
         {
             case Directions.North:

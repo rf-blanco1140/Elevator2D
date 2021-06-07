@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private Player playerRef;
-    private Directions moveDirection; //Vector2 moveDirection;
-    [SerializeField] GrabContorller grabRef;
+    private Directions moveDirection;
+    [SerializeField] GrabContorller grabControllerRef;
 
 
     // Update is called once per frame

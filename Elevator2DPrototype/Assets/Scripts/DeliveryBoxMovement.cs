@@ -24,7 +24,6 @@ public class DeliveryBoxMovement : MonoBehaviour
         //TODO la velocidad cambia a la velocidad del objeto colisionando en la Dir de la fuerza con menor velocidad
     }
 
-    //TODO actualmente se esta haciendo asumiendo que solo se va a encontrar con otras cajas y que el jugador es lo unico que puede causar que se detengan
     public bool CheckIfCanMove(Directions movementDir)
     {
         bool canMove = true;
@@ -33,14 +32,14 @@ public class DeliveryBoxMovement : MonoBehaviour
             canMove = false;
             return canMove;
         }
-        
-        GameObject collidingObj = deliveryBoxRef.GetCollidingObjInDirection(movementDir);
+
+        Pushable collidingObj = deliveryBoxRef.GetCollidingObjInDirection(movementDir);
         if(collidingObj != null)
         {
             DeliveryBoxMovement collidingDBM = collidingObj.GetComponent<DeliveryBoxMovement>();
             if(collidingDBM != null)
             {
-                canMove = collidingObj.GetComponent<DeliveryBoxMovement>().CheckIfCanMove(movementDir);
+                canMove = collidingDBM.CheckIfCanMove(movementDir);
             }
         }
         return canMove;

@@ -4,68 +4,62 @@ using UnityEngine;
 
 public class GrabContorller : MonoBehaviour
 {
-    /**public Transform grabbingPivot;
-    private bool canGrab;
-    private bool isGrabbing;
-    private GameObject objToGrab;
-    [SerializeField] PlayerMovement playerMovementRef;
+    [SerializeField] private Player playerRef;
 
-    private void Start()
+    private void Update()
     {
-        canGrab = false;
-        isGrabbing = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        GrabObject(objToGrab);
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Grabbable")
+        if(Input.GetKey(KeyCode.Space))
         {
-            canGrab = true;
-            objToGrab = collision.gameObject;
+            if(CheckIfHasBoxToGrab())
+            {
+                GrabObject();
+            }
+        }
+        else if(playerRef.GetIsGrabbing())
+        {
+            ReleaseGrabbedObject();
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private bool CheckIfHasBoxToGrab()
     {
-        collision.gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
-        canGrab = false;
-        objToGrab = null;
-    }
-
-    private void GrabObject(GameObject pGrabbedObj)
-    {
-        if(canGrab)
+        Pushable facingBox = playerRef.GetCollidingObjInDirection(playerRef.GetLookingDirection());
+        if (facingBox != null) 
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (facingBox.GetComponent<DeliveryBox>() != null)
             {
-                isGrabbing = true;
-                pGrabbedObj.GetComponent<ObjectStatus>().SetIsGrabbed(true);
-                pGrabbedObj.GetComponent<ObjectStatus>().SetIsBlocked(true);
-                pGrabbedObj.GetComponent<ObjectsMovement>().StopObject();
-                objToGrab.transform.parent = grabbingPivot;
-                objToGrab.transform.position = grabbingPivot.position;
-                playerMovementRef.ChangeMovementSpeed(2);
-            }
-            else if (Input.GetKeyUp(KeyCode.Space))
-            {
-                isGrabbing = false;
-                objToGrab.transform.parent = null;
-                playerMovementRef.ChangeMovementSpeed(5);
-                pGrabbedObj.GetComponent<ObjectStatus>().SetIsGrabbed(false);
-                pGrabbedObj.GetComponent<ObjectStatus>().SetIsBlocked(false);
+                return true;
             }
         }
         
+        return false;
     }
 
-    public bool getIsGrabbing()
+    private void GrabObject()
     {
-        return isGrabbing;
-    }*/
+        playerRef.SetIsGrabbing(true);
+        Pushable collidedObject = playerRef.GetCollidingObjInDirection(playerRef.GetLookingDirection());
+        if (collidedObject != null)
+        {
+            collidedObject.GetComponent<DeliveryBox>().SetIsGrabbed(true);
+        }
+        else
+        {
+            Debug.LogError("D:");
+        }
+    }
+
+    private void ReleaseGrabbedObject()
+    {
+        playerRef.SetIsGrabbing(false);
+        Pushable collidedObject = playerRef.GetCollidingObjInDirection(playerRef.GetLookingDirection());
+        if (collidedObject != null)
+        {
+            collidedObject.GetComponent<DeliveryBox>().SetIsGrabbed(false);
+        }
+        else
+        {
+            Debug.LogError("D:");
+        }
+    }
 }

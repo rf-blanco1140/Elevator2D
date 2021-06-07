@@ -5,14 +5,38 @@ using UnityEngine;
 public class CardinalCollider : MonoBehaviour
 {
     [SerializeField] private Directions colliderDir;
-    [SerializeField] private Pushable pushableObjectRef;
+    private Pushable pushableObjectRef;
+
+    private void Awake()
+    {
+        pushableObjectRef = transform.parent.GetComponent<Pushable>();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.GetComponent<Pushable>() != null)
+        CardinalCollider theOther = collision.gameObject.GetComponent<CardinalCollider>();
+        if (theOther == null)
+            return;
+
+        if(theOther.pushableObjectRef != null && IsOppositeDirection(theOther.colliderDir))
         {
-            pushableObjectRef = collision.gameObject.GetComponent<Pushable>();
-            pushableObjectRef.SetCollingObject(colliderDir, collision.gameObject);
+            pushableObjectRef.SetCollingObject(colliderDir, theOther.pushableObjectRef);
         }
+    }
+
+    private bool IsOppositeDirection(Directions dir)
+    {
+        switch (colliderDir)
+        {
+            case Directions.East:
+                return dir == Directions.West;
+            case Directions.West:
+                return dir == Directions.East;
+            case Directions.North:
+                return dir == Directions.South;
+            case Directions.South:
+                return dir == Directions.North;
+        }
+        return true;
     }
 }
