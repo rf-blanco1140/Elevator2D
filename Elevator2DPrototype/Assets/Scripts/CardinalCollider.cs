@@ -39,4 +39,19 @@ public class CardinalCollider : MonoBehaviour
         }
         return true;
     }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        CardinalCollider theOther = collision.gameObject.GetComponent<CardinalCollider>();
+        if (theOther == null)
+            return;
+
+        if (theOther.pushableObjectRef != null && IsOppositeDirection(theOther.colliderDir))
+        {
+            if(pushableObjectRef.GetCollidingObjInDirection(colliderDir) == theOther.pushableObjectRef)
+            {
+                pushableObjectRef.FreeColligingObj(colliderDir);
+            }
+        }
+    }
 }

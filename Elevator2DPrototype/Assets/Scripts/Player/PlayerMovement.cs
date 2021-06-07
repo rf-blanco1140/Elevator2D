@@ -27,10 +27,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void ProcessInputs()
     {
-        /**float moveX = Input.GetAxisRaw("Horizontal");
-        float moveY = Input.GetAxisRaw("Vertical");
-
-        moveDirection = new Vector2(moveX,moveY).normalized;*/
         moveDirection = Directions.Nulo;
         switch (Input.GetAxisRaw("Horizontal"))
         {
@@ -50,42 +46,5 @@ public class PlayerMovement : MonoBehaviour
                 moveDirection = Directions.North;
                 break;
         }
-    }
-
-    /**private void Move()
-    {
-        playerRB.MovePosition(playerRB.position + moveDirection * moveSpeed * Time.deltaTime);
-        playerRB.velocity = new Vector2(moveDirection.x*moveSpeed, moveDirection.y*moveSpeed);
-    }*/
-
-    /**public void ChangeMovementSpeed(float  pSpeed)
-    {
-        moveSpeed = pSpeed;
-    }*/
-
-    
-    /**private void RotatePlayer(float pHorizontal, float pVertical)
-    {
-        switch(pHorizontal)
-        {
-            case 1:
-                playerRB.rotation = -90;
-                break;
-            case -1:
-                playerRB.rotation = 90;
-                break;
-        }
-
-        switch(pVertical)
-        {
-            case 1:
-                playerRB.rotation = 0;
-                break;
-            case -1:
-                playerRB.rotation = 180;
-                break;
-        }
-        transform.rotation.s
-    }*/
-    
+    }  
 }
