@@ -434,6 +434,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 0.05
+  normalSpeed: 0.03
+  minSpeed: 0.01
   windRef: {fileID: 0}
 --- !u!114 &8480182134009568196
 MonoBehaviour:

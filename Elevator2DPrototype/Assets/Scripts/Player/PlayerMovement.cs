@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
+        MovePlayer();
     }
 
     private void ProcessInputs()
@@ -62,26 +62,34 @@ public class PlayerMovement : MonoBehaviour
     {
         playerRef.SetMinSpeed();
         WalkInDirection();
+        MoveGrabbedObject();
     }
     private void EnterNotGrabbingRoute()
     {
-        if(CheckWalkingAgainstObject())
+        if (IsWalking())
         {
-            MovedByWind();
+            if (CheckWalkingAgainstObject() == false)
+            {
+                playerRef.SetNormalSpeed();
+                ApplyWindModifiers();
+                WalkInDirection();
+            }
+            if(AreInParallelDirections(moveDirection,GetWindDirection()) == false)
+            {
+                MovedByWind();
+            }
         }
         else
         {
-            playerRef.SetNormalSpeed();
-            WalkInDirection();
             MovedByWind();
         }
     }
     private void MovedByWind()
     {
-        if(playerRef.GetWindReference().GetWindDirection() != Directions.Nulo)
+        if(GetWindDirection() != Directions.Nulo)
         {
             playerRef.SetMinSpeed();
-            playerRef.MovePlayer(playerRef.GetWindReference().GetWindDirection());
+            playerRef.MovePlayer(GetWindDirection());
         }
     }
     private void WalkInDirection()
@@ -96,5 +104,50 @@ public class PlayerMovement : MonoBehaviour
             isWalkingAgainstObject = true;
         }
         return isWalkingAgainstObject;
+    }
+    private Directions GetWindDirection()
+    {
+        return playerRef.GetWindReference().GetWindDirection();
+    }
+    private void ApplyWindModifiers()
+    {
+       if(GetWindDirection() != Directions.Nulo)
+        {
+            if (GetWindDirection() == moveDirection)
+            {
+                playerRef.SetMaxSpeed();
+            }
+            else if (AreInParallelDirections(moveDirection, GetWindDirection()))
+            {
+                playerRef.SetMinSpeed();
+            }
+        }
+    }
+    private bool AreInParallelDirections(Directions pDir1, Directions pDir2)
+    {
+        bool areParallel = false;
+        if(pDir1==Directions.South || pDir1 == Directions.North)
+        {
+            if(pDir2 == Directions.South || pDir2 == Directions.North)
+            {
+                areParallel = true;
+            }
+        }
+        else
+        {
+            if (pDir2 == Directions.East || pDir2 == Directions.West)
+            {
+                areParallel = true;
+            }
+        }
+        return areParallel;
+    }
+    private bool IsWalking()
+    {
+        return (moveDirection != Directions.Nulo);
+    }
+    private void MoveGrabbedObject()
+    {
+        playerRef.GetGrabbedObject().MoveToDirection(moveDirection);
     }
 }

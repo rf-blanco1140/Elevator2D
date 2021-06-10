@@ -6,6 +6,7 @@ public class Player : Pushable
 {
     private bool isGrabbing;
     private Directions lookingDirection;
+    private Pushable grabbedObject;
 
     private void Start()
     {
@@ -37,5 +38,14 @@ public class Player : Pushable
     public Directions GetLookingDirection()
     {
         return lookingDirection;
+    }
+
+    public void SetGrabbedObject(Pushable pGrabbed)
+    {
+        grabbedObject = pGrabbed;
+    }
+    public Pushable GetGrabbedObject()
+    {
+        return grabbedObject;
     }
 }

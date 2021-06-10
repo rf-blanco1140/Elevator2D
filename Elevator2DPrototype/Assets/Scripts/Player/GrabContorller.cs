@@ -37,29 +37,31 @@ public class GrabContorller : MonoBehaviour
 
     private void GrabObject()
     {
-        playerRef.SetIsGrabbing(true);
         Pushable collidedObject = playerRef.GetCollidingObjInDirection(playerRef.GetLookingDirection());
         if (collidedObject != null)
         {
+            playerRef.SetIsGrabbing(true);
             collidedObject.GetComponent<DeliveryBox>().SetIsGrabbed(true);
+            playerRef.SetGrabbedObject(collidedObject.GetComponent<DeliveryBox>());
         }
         else
         {
-            Debug.LogError("D:");
+            Debug.LogError("D: al agarrar");
         }
     }
 
     private void ReleaseGrabbedObject()
     {
-        playerRef.SetIsGrabbing(false);
         Pushable collidedObject = playerRef.GetCollidingObjInDirection(playerRef.GetLookingDirection());
         if (collidedObject != null)
         {
+            playerRef.SetIsGrabbing(false);
             collidedObject.GetComponent<DeliveryBox>().SetIsGrabbed(false);
+            playerRef.SetGrabbedObject(null);
         }
         else
         {
-            Debug.LogError("D:");
+            Debug.LogError("D: al soltar");
         }
     }
 }
