@@ -5,6 +5,8 @@ using UnityEngine;
 public class Pushable : MonoBehaviour
 {
     [SerializeField] protected float maxSpeed;
+    [SerializeField] protected float normalSpeed;
+    [SerializeField] protected float minSpeed;
     protected float currentSpeed;
     protected Pushable NorthCollidingObj;
     protected Pushable SouthCollidingObj;
@@ -27,9 +29,17 @@ public class Pushable : MonoBehaviour
         currentSpeed = maxSpeed;
     }
 
-    public void SubtractSpeed(float decreaseVal)
+   public void SetMaxSpeed()
     {
-        currentSpeed = currentSpeed - decreaseVal;
+        currentSpeed = maxSpeed;
+    }
+    public void SetNormalSpeed()
+    {
+        currentSpeed = normalSpeed;
+    }
+    public void SetMinSpeed()
+    {
+        currentSpeed = minSpeed;
     }
 
     public void SetCollingObject(Directions collisionDirection, Pushable collisionObj)
@@ -93,23 +103,26 @@ public class Pushable : MonoBehaviour
 
     public void MoveToDirection(Directions pDirection)
     {
-        Vector3 movingVector = new Vector3();
-        switch(pDirection)
+        if(pDirection != Directions.Nulo)
         {
-            case Directions.East:
-                movingVector = Vector3.right * currentSpeed;
-                break;
-            case Directions.West:
-                movingVector = Vector3.left * currentSpeed;
-                break;
-            case Directions.South:
-                movingVector = Vector3.down * currentSpeed;
-                break;
-            case Directions.North:
-                movingVector = Vector3.up * currentSpeed;
-                break;
+            Vector3 movingVector = new Vector3();
+            switch (pDirection)
+            {
+                case Directions.East:
+                    movingVector = Vector3.right * currentSpeed;
+                    break;
+                case Directions.West:
+                    movingVector = Vector3.left * currentSpeed;
+                    break;
+                case Directions.South:
+                    movingVector = Vector3.down * currentSpeed;
+                    break;
+                case Directions.North:
+                    movingVector = Vector3.up * currentSpeed;
+                    break;
+            }
+            transform.Translate(movingVector, Space.World);
         }
-        transform.Translate(movingVector, Space.World);
     }
 
     public EnviromentStatus GetWindReference()

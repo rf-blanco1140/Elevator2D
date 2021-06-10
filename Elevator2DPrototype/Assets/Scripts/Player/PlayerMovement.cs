@@ -17,12 +17,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Move();
-        playerRef.MovePlayer(moveDirection);
-        /**if(!grabRef.getIsGrabbing())
-        {
-            //RotatePlayer(moveDirection.x, moveDirection.y);
-        }*/
+        
     }
 
     private void ProcessInputs()
@@ -46,5 +41,60 @@ public class PlayerMovement : MonoBehaviour
                 moveDirection = Directions.North;
                 break;
         }
-    }  
+    }
+    
+    private void MovePlayer()
+    {
+        if(CheckIfgrabbing())
+        {
+            EnterGrabbingRoute();
+        }
+        else
+        {
+            EnterNotGrabbingRoute();
+        }
+    }
+    private bool CheckIfgrabbing()
+    {
+        return playerRef.GetIsGrabbing();
+    }
+    private void EnterGrabbingRoute()
+    {
+        playerRef.SetMinSpeed();
+        WalkInDirection();
+    }
+    private void EnterNotGrabbingRoute()
+    {
+        if(CheckWalkingAgainstObject())
+        {
+            MovedByWind();
+        }
+        else
+        {
+            playerRef.SetNormalSpeed();
+            WalkInDirection();
+            MovedByWind();
+        }
+    }
+    private void MovedByWind()
+    {
+        if(playerRef.GetWindReference().GetWindDirection() != Directions.Nulo)
+        {
+            playerRef.SetMinSpeed();
+            playerRef.MovePlayer(playerRef.GetWindReference().GetWindDirection());
+        }
+    }
+    private void WalkInDirection()
+    {
+        playerRef.MovePlayer(moveDirection);
+    }
+    private bool CheckWalkingAgainstObject()
+    {
+        bool isWalkingAgainstObject = false;
+        if(playerRef.GetCollidingObjInDirection(moveDirection) != null)
+        {
+            isWalkingAgainstObject = true;
+        }
+        return isWalkingAgainstObject;
+    }
 }
