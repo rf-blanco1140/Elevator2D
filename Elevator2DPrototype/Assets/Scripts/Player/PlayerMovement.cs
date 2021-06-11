@@ -148,6 +148,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void MoveGrabbedObject()
     {
+        playerRef.GetGrabbedObject().SetSpeed(playerRef.GetObjSpeed());
         playerRef.GetGrabbedObject().MoveToDirection(moveDirection);
     }
 }

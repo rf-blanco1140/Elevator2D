@@ -36,9 +36,11 @@ public class DeliveryBoxMovement : MonoBehaviour
         Pushable collidingObj = deliveryBoxRef.GetCollidingObjInDirection(movementDir);
         if(collidingObj != null)
         {
+            Debug.LogError("Encounterd a Pushable");
             DeliveryBoxMovement collidingDBM = collidingObj.GetComponent<DeliveryBoxMovement>();
             if(collidingDBM != null)
             {
+                Debug.LogError("Found a DeliveryBoxMovement");
                 canMove = collidingDBM.CheckIfCanMove(movementDir);
             }
         }

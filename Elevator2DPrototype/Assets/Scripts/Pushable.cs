@@ -23,7 +23,10 @@ public class Pushable : MonoBehaviour
     {
         return currentSpeed;
     }
-
+    public void SetSpeed(float pSpeed)
+    {
+        currentSpeed = pSpeed;
+    }
     public void ResetSpeedToMax()
     {
         currentSpeed = maxSpeed;

@@ -224,7 +224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 0.2
   normalSpeed: 0.1
-  minSpeed: 0.08
+  minSpeed: 0.06
   windRef: {fileID: 0}
 --- !u!61 &6042287807811667084
 BoxCollider2D:
